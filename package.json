@@ -1,0 +1,46 @@
+{
+  "name": "hermione-codemod",
+  "version": "0.0.0",
+  "description": "Hermione codemod scripts",
+  "scripts": {
+    "lint": "eslint .",
+    "test": "npm run test-unit && npm run lint",
+    "test-unit": "exit 0",
+    "release": "standard-version"
+  },
+  "engines": {
+    "node": ">= 12.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gemini-testing/hermione-codemod.git"
+  },
+  "keywords": [
+    "hermione",
+    "codemod",
+    "wdio"
+  ],
+  "author": "Dmitriy Dudkevich <dudkevich@yandex-team.ru>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/gemini-testing/hermione-codemod/issues"
+  },
+  "homepage": "https://github.com/gemini-testing/hermione-codemod#readme",
+  "dependencies": {
+    "chalk": "^4.1.0",
+    "jscodeshift": "^0.11.0",
+    "lodash": "^4.17.20"
+  },
+  "devDependencies": {
+    "eslint": "^7.20.0",
+    "eslint-config-gemini-testing": "^3.0.0",
+    "jest": "^26.6.3",
+    "standard-version": "^9.1.1"
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "roots": [
+      "transforms"
+    ]
+  }
+}
