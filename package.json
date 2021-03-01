@@ -5,7 +5,7 @@
   "scripts": {
     "lint": "eslint .",
     "test": "npm run test-unit && npm run lint",
-    "test-unit": "exit 0",
+    "test-unit": "jest",
     "release": "standard-version"
   },
   "engines": {
