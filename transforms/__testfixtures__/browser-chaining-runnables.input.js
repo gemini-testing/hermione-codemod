@@ -13,7 +13,7 @@ afterEach(function() {
 });
 
 it('should do nothing if "browser" is not used', function() {
-    return this.some.foo().bar().baz();
+    return some.foo().bar().baz();
 });
 
 it('should make runnable async even if call with one browser command', function() {
