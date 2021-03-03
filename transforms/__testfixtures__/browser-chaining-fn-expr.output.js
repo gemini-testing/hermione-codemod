@@ -315,6 +315,13 @@
     return baz();
 })();
 
+// should not fail when identifier is used inside then
+(async function() {
+    await this.browser.foo();
+    await bar;
+    return baz;
+})();
+
 // should replace return node to await inside "then" (not last in chaining) and "if" statement
 (async function() {
     await this.browser.foo();
