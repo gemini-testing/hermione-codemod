@@ -326,6 +326,14 @@
         .then(baz());
 })();
 
+// should not fail when identifier is used inside then
+(function () {
+    return this.browser
+        .foo()
+        .then(bar)
+        .then(baz);
+})();
+
 // should replace return node to await inside "then" (not last in chaining) and "if" statement
 (function() {
     return this.browser
