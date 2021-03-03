@@ -1,6 +1,6 @@
 {
   "name": "hermione-codemod",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Hermione codemod scripts",
   "scripts": {
     "lint": "eslint .",
