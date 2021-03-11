@@ -19,8 +19,8 @@ For example you can use the `-d` option for a dry-run and `-p` to print the outp
 ### browser-chaining-to-async-await
 
 Transforms calls of browser commands from chaining to async-await style.
-Used in order to update hermione with wdio@6+ inside in which chaining of browser commands does not work anymore and tests should be rewritten to async-await.
-Moreover in wdio@6 result of calling browser commands does not return to `value` property anymore and this will be fixed with next transform script.
+Used in order to update hermione with wdio@7+ inside in which chaining of browser commands does not work anymore and tests should be rewritten to async-await.
+Moreover in wdio@7 result of calling browser commands does not return to `value` property anymore, to fix this use [remove-browser-value](#remove-browser-value) script.
 
 ```sh
 npx jscodeshift -t hermione-codemod/transforms/browser-chaining-to-async-await.js <path> [...options]
@@ -29,21 +29,21 @@ npx jscodeshift -t hermione-codemod/transforms/browser-chaining-to-async-await.j
 For example (input):
 ```js
 it('test', function() {
-    return this.browser
-        .foo()
-        .bar()
-        .then((res) => this.browser.baz(res))
-        .qux();
+  return this.browser
+    .foo()
+    .bar()
+    .then((res) => this.browser.baz(res))
+    .qux();
 });
 ```
 
 will be transformed to (output):
 ```js
 it('test', async function() {
-    await this.browser.foo();
-    const res = await this.browser.bar();
-    await this.browser.baz(res);
-    await this.browser.qux();
+  await this.browser.foo();
+  const res = await this.browser.bar();
+  await this.browser.baz(res);
+  await this.browser.qux();
 });
 ```
 
@@ -87,8 +87,8 @@ More examples can be found in [transforms/\_\_testfixtures\_\_](https://github.c
   ```js
   (function() {
     return browser.foo()
-        .then(() => assert.equal(1, 1))
-        .then(() => expect(2).to.equal(2));
+      .then(() => assert.equal(1, 1))
+      .then(() => expect(2).to.equal(2));
   })();
   ```
 
@@ -223,7 +223,7 @@ More examples can be found in [transforms/\_\_testfixtures\_\_](https://github.c
 
 #### Example of usage
 
-1. Run transform script on files that should be modified. For example Ш want modify all files inside `tests/platform/**` whose name matches on `*.hermione.js` or `*.hermione-helper.js`:
+1. Run transform script on files that should be modified. For example I want modify all files inside `tests/platform/**` whose name matches on `*.hermione.js` or `*.hermione-helper.js`:
 ```sh
 npx jscodeshift -t hermione-codemod/transforms/browser-chaining-to-async-await.js tests/platform/**/*.*(hermione|hermione-helper).js --no-await='assert'
 ```
@@ -233,6 +233,50 @@ npx jscodeshift -t hermione-codemod/transforms/browser-chaining-to-async-await.j
 ```sh
 npx eslint --fix tests/platform/**/*.*(hermione|hermione-helper).js
 ```
+
+### remove-browser-prop
+
+Removes usages of the passed property from the result of calling browser commands.
+Used in order to update hermione with wdio@7+ inside in which property `value` not used anymore for store result of executing browser command.
+Must be used only after `browser-chaining-to-async-await` script.
+
+```sh
+npx jscodeshift -t hermione-codemod/transforms/remove-browser-value.js <path> [...options]
+```
+
+For example (input):
+```js
+it('test', async function() {
+  const res1 = await this.browser.foo();
+  const {value: res2} = await this.browser.bar();
+  const res3 = (await this.browser.baz()).value;
+
+  return [res1.value, res2, res3]
+});
+```
+
+will be transformed to (output):
+```js
+it('test', async function() {
+  const res1 = await this.browser.foo();
+  const res2 = await this.browser.bar();
+  const res3 = await this.browser.baz();
+
+  return [res1, res2, res3];
+});
+```
+
+More examples can be found in [transforms/\_\_testfixtures\_\_](https://github.com/gemini-testing/hermione-codemod/blob/main/transforms/__testfixtures__) directory.
+
+#### Options
+
+* `--browser-name` - as like in `browser-chaining-to-async-await` script;
+* `--property-name` - ability to set name of property which should be removed from the result of calling browser commands. Default value is `value`.
+
+  Example:
+  ```sh
+  npx jscodeshift -t <transform> <path> --property-name='value'
+  ```
 
 ## Recast Options
 
