@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.1.0](https://github.com/gemini-testing/hermione-codemod/compare/v0.0.3...v0.1.0) (2021-03-15)
+
+
+### Features
+
+* add "remove-browser-prop" codemod ([3e402e2](https://github.com/gemini-testing/hermione-codemod/commit/3e402e2cc655657ed6e8d24a245273b2376ccebb))
+
 ### [0.0.3](https://github.com/gemini-testing/hermione-codemod/compare/v0.0.2...v0.0.3) (2021-03-03)
 
 
