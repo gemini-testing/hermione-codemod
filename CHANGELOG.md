@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.1](https://github.com/gemini-testing/hermione-codemod/compare/v0.1.0...v0.1.1) (2021-07-07)
+
+
+### Bug Fixes
+
+* **browser-chaining:** do not replace return node without value to await ([a71eb9b](https://github.com/gemini-testing/hermione-codemod/commit/a71eb9b53a0feb09e261fc446bf4070d1e9e252d))
+
 ## [0.1.0](https://github.com/gemini-testing/hermione-codemod/compare/v0.0.3...v0.1.0) (2021-03-15)
 
 
