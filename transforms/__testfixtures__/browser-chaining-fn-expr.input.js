@@ -327,7 +327,7 @@
 })();
 
 // should not fail when identifier is used inside then
-(function () {
+(function() {
     return this.browser
         .foo()
         .then(bar)
@@ -348,6 +348,22 @@
         .then(() => {
             if (b) {
                 return qux();
+            }
+        });
+})();
+
+// should not replace return node without value to await inside "then"
+(function() {
+    return this.browser
+        .foo()
+        .then(() => {
+            if (a) {
+                return;
+            }
+        })
+        .then(() => {
+            if (b) {
+                return;
             }
         });
 })();

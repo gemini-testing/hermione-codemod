@@ -334,3 +334,14 @@
         return qux();
     }
 })();
+
+// should not replace return node without value to await inside "then"
+(async function() {
+    await this.browser.foo();
+    if (a) {
+        return;
+    }
+    if (b) {
+        return;
+    }
+})();
