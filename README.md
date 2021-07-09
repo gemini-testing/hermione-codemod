@@ -241,7 +241,7 @@ Used in order to update hermione with wdio@7+ inside in which property `value` n
 Must be used only after `browser-chaining-to-async-await` script.
 
 ```sh
-npx jscodeshift -t hermione-codemod/transforms/remove-browser-value.js <path> [...options]
+npx jscodeshift -t hermione-codemod/transforms/remove-browser-prop.js <path> [...options]
 ```
 
 For example (input):
