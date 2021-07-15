@@ -74,7 +74,7 @@ it('should correctly handle case when called inlined function in then', async fu
 
 it('should add parenthesizes around conditional expression', async function() {
     const res = await this.browser.foo();
-    await (res === 'boom' ? bar() : baz());
+    return (res === 'boom' ? bar() : baz());
 });
 
 it('should replace return node to await inside "then" and "if" statement', async function() {

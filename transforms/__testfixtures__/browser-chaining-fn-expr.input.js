@@ -367,3 +367,66 @@
             }
         });
 })();
+
+// should not replace return node inside last then
+(function() {
+    return this.browser
+        .foo()
+        .then(() => {
+            return bar();
+        });
+})();
+
+// should not replace return node inside not last then when using with not awaitable expression
+(function() {
+    return this.browser
+        .foo()
+        .then(() => {
+            return {a: 'b'};
+        })
+        .then((val) => {
+            return val;
+        });
+})();
+
+// should not replace return node inside callback of browser command when using with not awaitable expression
+(function() {
+    return this.browser.foo(() => {
+        return 12345;
+    }).then((val) => {
+        return val + 1;
+    });
+})();
+
+// should replace return node to await inside not last then when using with identifier
+(function() {
+    const p = Promise.resolve();
+
+    return this.browser
+        .foo()
+        .then(() => {
+            return p;
+        })
+        .then((val) => {
+            return val;
+        });
+})();
+
+// should replace return node to await inside not last then when using with member expression
+(function() {
+    const a = {b: Promise.resolve()};
+
+    return this.browser
+        .foo()
+        .then(() => {
+            return a.b;
+        })
+        .then((val) => {
+            return val;
+        });
+})();
+
+// should not add await node to not awaitable expression
+(function() {
+    var result = this.browser.foo().then(() => 'foo');
+})();
