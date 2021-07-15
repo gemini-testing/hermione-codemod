@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.2](https://github.com/gemini-testing/hermione-codemod/compare/v0.1.1...v0.1.2) (2021-07-15)
+
+
+### Bug Fixes
+
+* add await node to only awaitable expressions ([0847b88](https://github.com/gemini-testing/hermione-codemod/commit/0847b88209b84aeb7170426ff582f1bbf7fcc39c))
+
 ### [0.1.1](https://github.com/gemini-testing/hermione-codemod/compare/v0.1.0...v0.1.1) (2021-07-07)
 
 
