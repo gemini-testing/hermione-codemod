@@ -345,3 +345,49 @@
         return;
     }
 })();
+
+// should not replace return node inside last then
+(async function() {
+    await this.browser.foo();
+    return bar();
+})();
+
+// should not replace return node inside not last then when using with not awaitable expression
+(async function() {
+    await this.browser.foo();
+    const val = {a: 'b'};
+    return val;
+})();
+
+// should not replace return node inside callback of browser command when using with not awaitable expression
+(async function() {
+    const val = await this.browser.foo(() => {
+        return 12345;
+    });
+
+    return val + 1;
+})();
+
+// should replace return node to await inside not last then when using with identifier
+(async function() {
+    const p = Promise.resolve();
+
+    await this.browser.foo();
+    const val = await p;
+    return val;
+})();
+
+// should replace return node to await inside not last then when using with member expression
+(async function() {
+    const a = {b: Promise.resolve()};
+
+    await this.browser.foo();
+    const val = await a.b;
+    return val;
+})();
+
+// should not add await node to not awaitable expression
+(async function() {
+    await this.browser.foo();
+    var result = 'foo';
+})();
