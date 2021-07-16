@@ -20,7 +20,7 @@ For example you can use the `-d` option for a dry-run and `-p` to print the outp
 
 Transforms calls of browser commands from chaining to async-await style.
 Used in order to update hermione with wdio@7+ inside in which chaining of browser commands does not work anymore and tests should be rewritten to async-await.
-Moreover in wdio@7 result of calling browser commands does not return to `value` property anymore, to fix this use [remove-browser-value](#remove-browser-value) script.
+Moreover in wdio@7 result of calling browser commands does not return to `value` property anymore, to fix this use [remove-browser-prop](#remove-browser-prop) script.
 
 ```sh
 npx jscodeshift -t hermione-codemod/transforms/browser-chaining-to-async-await.js <path> [...options]
@@ -241,7 +241,7 @@ Used in order to update hermione with wdio@7+ inside in which property `value` n
 Must be used only after `browser-chaining-to-async-await` script.
 
 ```sh
-npx jscodeshift -t hermione-codemod/transforms/remove-browser-value.js <path> [...options]
+npx jscodeshift -t hermione-codemod/transforms/remove-browser-prop.js <path> [...options]
 ```
 
 For example (input):
