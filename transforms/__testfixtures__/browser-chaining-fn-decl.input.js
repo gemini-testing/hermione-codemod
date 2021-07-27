@@ -275,39 +275,3 @@ function some_31() {
             return this.browser.rty(c, d);
         })
 }
-
-// should correctly handle the case with bind inside then (bind not called)
-function some_32() {
-    this.browser
-        .foo()
-        .then(foo.bind(this.browser));
-}
-
-// should not fail when onRejected callback is passed to then (TODO: fix it with transform to try catch)
-function some_33() {
-    this.browser
-        .foo()
-        .then(function some_33_1() {
-            return this.browser.bar();
-        }, function some_33_2() {
-            throw new Error('o.O');
-        });
-}
-
-// should not fail when catch is used in browser chaining (TODO: fix it with transform to try catch)
-function some_34() {
-    this.browser
-        .foo()
-        .catch(function some_34_1() {
-            throw new Error('o.O');
-        });
-}
-
-// should not fail when finally is used in browser chaining (TODO: fix it with transform to try finally)
-function some_35() {
-    this.browser
-        .foo()
-        .finally(function some_35_1() {
-            return this.browser.bar();
-        });
-}

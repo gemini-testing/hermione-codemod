@@ -32,3 +32,9 @@ defineTest(
     {'browser-name': 'browser,this'},
     'browser-chaining-with-this'
 );
+defineTest(
+    __dirname,
+    'browser-chaining-to-async-await',
+    {'browser-name': 'browser,this'},
+    'browser-chaining-warnings'
+);

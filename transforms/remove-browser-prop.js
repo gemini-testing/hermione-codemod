@@ -6,7 +6,6 @@ module.exports = (...args) => {
     const t = RemoveBrowserPropTransformer.create(...args);
 
     t.findBrowserUsageFns().forEach(data => t.removeBrowserProp(data));
-    t.warnAboutPropUsages();
 
     return t.toSource();
 };

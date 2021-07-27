@@ -276,28 +276,3 @@ async function some_31() {
     const [c, d] = await this.browser.qwe();
     return this.browser.rty(c, d);
 }
-
-// should correctly handle the case with bind inside then (bind not called)
-async function some_32() {
-    await this.browser.foo();
-    return foo.bind(this.browser);
-}
-
-// should not fail when onRejected callback is passed to then (TODO: fix it with transform to try catch)
-async function some_33() {
-    await this.browser.foo();
-    return this.browser.bar();
-    throw new Error('o.O');
-}
-
-// should not fail when catch is used in browser chaining (TODO: fix it with transform to try catch)
-async function some_34() {
-    await this.browser.foo();
-    throw new Error('o.O');
-}
-
-// should not fail when finally is used in browser chaining (TODO: fix it with transform to try finally)
-async function some_35() {
-    await this.browser.foo();
-    return this.browser.bar();
-}

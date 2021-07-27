@@ -33,9 +33,3 @@ async () => {
     const text = await this.browser.foo();
     firstBreadcrumbText = text;
 };
-
-// should not fail when logical expression is used with browser commands (TODO: fix it with transform to ifStatement)
-async () => {
-    await this.browser.foo();
-    return bool && this.browser.bar();
-};
