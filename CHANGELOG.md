@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.3](https://github.com/gemini-testing/hermione-codemod/compare/v0.1.2...v0.1.3) (2021-07-27)
+
+
+### Features
+
+* warnings are now added to source code as syntax errors ([6366864](https://github.com/gemini-testing/hermione-codemod/commit/63668649fd6aba33e295503226853fd9f3deeae9))
+
 ### [0.1.2](https://github.com/gemini-testing/hermione-codemod/compare/v0.1.1...v0.1.2) (2021-07-15)
 
 
