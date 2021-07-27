@@ -29,10 +29,3 @@
     return this.browser.foo()
         .then(text => firstBreadcrumbText = text);
 };
-
-// should not fail when logical expression is used with browser commands (TODO: fix it with transform to ifStatement)
-() => {
-    this.browser
-        .foo()
-        .then(() => bool && this.browser.bar());
-};

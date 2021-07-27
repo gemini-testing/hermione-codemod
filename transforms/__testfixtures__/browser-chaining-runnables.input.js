@@ -111,7 +111,7 @@ it('should split chained browser commands to async-await calls', async function(
 });
 
 it('should split chained browser commands with "then" to async-await calls', async function() {
-    await browser.foo().then(bar());
+    await browser.foo().then(() => bar());
 });
 
 it('should set result to variable from last call', async function () {

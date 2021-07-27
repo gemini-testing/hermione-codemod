@@ -276,64 +276,6 @@
         })
 })();
 
-// should correctly handle the case with bind inside then (bind not called)
-(function() {
-    this.browser
-        .foo()
-        .then(foo.bind(this.browser));
-})();
-
-// should not fail when onRejected callback is passed to then (TODO: fix it with transform to try catch)
-(function() {
-    this.browser
-        .foo()
-        .then(function() {
-            return this.browser.bar();
-        }, function() {
-            throw new Error('o.O');
-        });
-})();
-
-// should not fail when catch is used in browser chaining (TODO: fix it with transform to try catch)
-(function() {
-    this.browser
-        .foo()
-        .catch(function() {
-            throw new Error('o.O');
-        });
-})();
-
-// should not fail when finally is used in browser chaining (TODO: fix it with transform to try finally)
-(function() {
-    this.browser
-        .foo()
-        .finally(function() {
-            return this.browser.bar();
-        });
-})();
-
-// should not fail when used conditional expression is used browser commands (TODO: fix it)
-(function() {
-    return (platform === 'desktop' ? this.browser.bar() : this.browser.baz())
-        .qux();
-})();
-
-// should not fail when function is called inside then
-(function() {
-    return this.browser
-        .foo()
-        .then(bar())
-        .then(baz());
-})();
-
-// should not fail when identifier is used inside then
-(function() {
-    return this.browser
-        .foo()
-        .then(bar)
-        .then(baz);
-})();
-
 // should replace return node to await inside "then" (not last in chaining) and "if" statement
 (function() {
     return this.browser

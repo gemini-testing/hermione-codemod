@@ -56,12 +56,6 @@
     return data;
 })();
 
-// should not fail when used few properties inside object destructuring, should be fixed manually (TODO: fix it)
-(async function() {
-    const {value: data, bar: baz} = await browser.foo();
-    return [data, baz];
-})();
-
 // should remove object destructuring with "value" property inside array destructuring
 (async function() {
     const [{value: data}, res] = await Promise.all(browser.foo(), browser.bar());
@@ -124,14 +118,8 @@ async function some_8() {
     return data;
 }
 
-// should not fail when used few properties inside object destructuring, should be fixed manually (TODO: fix it)
-async function some_9() {
-    const {value: data, bar: baz} = await browser.foo();
-    return [data, baz];
-}
-
 // should remove object destructuring with "value" property inside array destructuring
-async function some_10() {
+async function some_9() {
     const [{value: data}, res] = await Promise.all(browser.foo(), browser.bar());
     return data + res;
 }
@@ -190,12 +178,6 @@ async () => {
 async () => {
     const {value: data} = await browser.foo();
     return data;
-}
-
-// should not fail when used few properties inside object destructuring, should be fixed manually (TODO: fix it)
-async () => {
-    const {value: data, bar: baz} = await browser.foo();
-    return [data, baz];
 }
 
 // should remove object destructuring with "value" property inside array destructuring

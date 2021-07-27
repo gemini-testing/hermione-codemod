@@ -277,51 +277,6 @@
     return this.browser.rty(c, d);
 })();
 
-// should correctly handle the case with bind inside then (bind not called)
-(async function() {
-    await this.browser.foo();
-    return foo.bind(this.browser);
-})();
-
-// should not fail when onRejected callback is passed to then (TODO: fix it with transform to try catch)
-(async function() {
-    await this.browser.foo();
-    return this.browser.bar();
-    throw new Error('o.O');
-})();
-
-// should not fail when catch is used in browser chaining (TODO: fix it with transform to try catch)
-(async function() {
-    await this.browser.foo();
-    throw new Error('o.O');
-})();
-
-// should not fail when finally is used in browser chaining (TODO: fix it with transform to try finally)
-(async function() {
-    await this.browser.foo();
-    return this.browser.bar();
-})();
-
-// should not fail when used conditional expression is used browser commands (TODO: fix it)
-(function() {
-    return (platform === 'desktop' ? this.browser.bar() : this.browser.baz())
-        .qux();
-})();
-
-// should not fail when function is called inside then
-(async function() {
-    await this.browser.foo();
-    await bar();
-    return baz();
-})();
-
-// should not fail when identifier is used inside then
-(async function() {
-    await this.browser.foo();
-    await bar;
-    return baz;
-})();
-
 // should replace return node to await inside "then" (not last in chaining) and "if" statement
 (async function() {
     await this.browser.foo();
