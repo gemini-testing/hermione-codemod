@@ -76,11 +76,11 @@ More examples can be found in [transforms/\_\_testfixtures\_\_](https://github.c
   };
   ```
 
-* `--no-await` - ability to set names of called nodes that should not be awaited. For example if you do not await assert calls called inside then callback. Default value is `null`.
+* `--not-await` - ability to set names of called nodes that should not be awaited. For example if you do not await assert calls called inside then callback. Default value is `['assert', 'should', 'expect']`.
 
   Example:
   ```sh
-  npx jscodeshift -t <transform> <path> --no-await='assert,expect'
+  npx jscodeshift -t <transform> <path> --not-await='assert,expect'
   ```
 
   Input:
@@ -225,7 +225,7 @@ More examples can be found in [transforms/\_\_testfixtures\_\_](https://github.c
 
 1. Run transform script on files that should be modified. For example I want modify all files inside `tests/platform/**` whose name matches on `*.hermione.js` or `*.hermione-helper.js`:
 ```sh
-npx jscodeshift -t node_modules/hermione-codemod/transforms/browser-chaining-to-async-await.js tests/platform/**/*.*(hermione|hermione-helper).js --no-await='assert'
+npx jscodeshift -t node_modules/hermione-codemod/transforms/browser-chaining-to-async-await.js tests/platform/**/*.*(hermione|hermione-helper).js --not-await='assert'
 ```
 2. After transformation of all tests script may inform you about found problems which are listed [above](#areas-of-improvement), fix them manually.
 3. Run transform script again even if it does not inform you about any problems in previous step. It is necessary because it can found problems with duplication of identifier declaration after transformation code. Rerun transform script until it succeeds and won't inform you that no test has been modified.
