@@ -20,7 +20,7 @@ For example you can use the `-d` option for a dry-run and `-p` to print the outp
 
 Transforms calls of browser commands from chaining to async-await style.
 Used in order to update hermione with wdio@7+ inside in which chaining of browser commands does not work anymore and tests should be rewritten to async-await.
-Moreover in wdio@7 result of calling browser commands does not return to `value` property anymore, to fix this use [remove-browser-value](#remove-browser-value) script.
+Moreover in wdio@7 result of calling browser commands does not return to `value` property anymore, to fix this use [remove-browser-prop](#remove-browser-prop) script.
 
 ```sh
 npx jscodeshift -t hermione-codemod/transforms/browser-chaining-to-async-await.js <path> [...options]
@@ -225,7 +225,7 @@ More examples can be found in [transforms/\_\_testfixtures\_\_](https://github.c
 
 1. Run transform script on files that should be modified. For example I want modify all files inside `tests/platform/**` whose name matches on `*.hermione.js` or `*.hermione-helper.js`:
 ```sh
-npx jscodeshift -t hermione-codemod/transforms/browser-chaining-to-async-await.js tests/platform/**/*.*(hermione|hermione-helper).js --no-await='assert'
+npx jscodeshift -t node_modules/hermione-codemod/transforms/browser-chaining-to-async-await.js tests/platform/**/*.*(hermione|hermione-helper).js --no-await='assert'
 ```
 2. After transformation of all tests script may inform you about found problems which are listed [above](#areas-of-improvement), fix them manually.
 3. Run transform script again even if it does not inform you about any problems in previous step. It is necessary because it can found problems with duplication of identifier declaration after transformation code. Rerun transform script until it succeeds and won't inform you that no test has been modified.
@@ -241,7 +241,7 @@ Used in order to update hermione with wdio@7+ inside in which property `value` n
 Must be used only after `browser-chaining-to-async-await` script.
 
 ```sh
-npx jscodeshift -t hermione-codemod/transforms/remove-browser-value.js <path> [...options]
+npx jscodeshift -t node_modules/hermione-codemod/transforms/remove-browser-prop.js <path> [...options]
 ```
 
 For example (input):
