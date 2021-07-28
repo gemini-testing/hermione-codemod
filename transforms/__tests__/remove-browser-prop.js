@@ -17,6 +17,6 @@ defineTest(
 defineTest(
     __dirname,
     'remove-browser-prop',
-    {'browser-name': 'browser,this'},
+    {'browser-name': 'browser,this', 'property-name': 'value'},
     'remove-browser-prop-warnings'
 );

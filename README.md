@@ -53,53 +53,89 @@ More examples can be found in [transforms/\_\_testfixtures\_\_](https://github.c
 
 * `--browser-name` - ability to set used name of browser instance variable in your tests. Transform script will find usage of passed browser names with chaining calls and transform them to await nodes. Default value is `browser`.
 
-  Example:
-  ```sh
-  npx jscodeshift -t <transform> <path> --browser-name='bro1,bro2'
-  ```
+Example:
+```sh
+npx jscodeshift -t <transform> <path> --browser-name='bro1,bro2'
+```
 
-  Input:
-  ```js
-  const fn1 = () => bro1.foo().bar();
-  const fn2 = () => this.bro2.baz().qux();
-  ```
+Input:
+```js
+const fn1 = () => bro1.foo().bar();
+const fn2 = () => this.bro2.baz().qux();
+```
 
-  Output:
-  ```js
-  const fn1 = async () => {
-    await bro1.foo();
-    return bro1.bar();
-  };
-  const fn2 = async () => {
-    await this.bro2.baz();
-    return this.bro2.qux();
-  };
-  ```
+Output:
+```js
+const fn1 = async () => {
+  await bro1.foo();
+  return bro1.bar();
+};
+const fn2 = async () => {
+  await this.bro2.baz();
+  return this.bro2.qux();
+};
+```
 
 * `--not-await` - ability to set names of called nodes that should not be awaited. For example if you do not await assert calls called inside then callback. Default value is `['assert', 'should', 'expect']`.
 
-  Example:
-  ```sh
-  npx jscodeshift -t <transform> <path> --not-await='assert,expect'
-  ```
+Example:
+```sh
+npx jscodeshift -t <transform> <path> --not-await='assert,expect'
+```
 
-  Input:
-  ```js
-  (function() {
-    return browser.foo()
-      .then(() => assert.equal(1, 1))
-      .then(() => expect(2).to.equal(2));
-  })();
-  ```
+Input:
+```js
+(function() {
+  return browser.foo()
+    .then(() => assert.equal(1, 1))
+    .then(() => expect(2).to.equal(2));
+})();
+```
 
-  Output:
-  ```js
-  (async function() {
-    await browser.foo();
-    assert.equal(1, 1);
-    return expect(2).to.equal(2);
-  })();
-  ```
+Output:
+```js
+(async function() {
+  await browser.foo();
+  assert.equal(1, 1);
+  return expect(2).to.equal(2);
+})();
+```
+
+* `--break-chaining-on` - ability to break chaining on nodes that matched to the passed identifiers. For example if you are using [chai-as-promised](https://www.npmjs.com/package/chai-as-promised) that can be called on browser commands. Default value is `['assert', 'should', 'expect']`.
+
+Example:
+```sh
+npx jscodeshift -t <transform> <path> --break-chaining-on='should'
+```
+
+Input:
+```js
+(function() {
+  return browser.foo()
+    .should.eventually.equal('foo')
+    .bar();
+})();
+```
+
+Output:
+```js
+(async function() {
+  await browser.foo();
+  static Error("hermione-codemod_1: fix code below manually");
+  should.eventually.equal('foo');
+  static Error("hermione-codemod_1: fix code above manually");
+  await browser.bar();
+})();
+```
+
+After that you need to correct the test manually and in the end it might look like this:
+```js
+(async function() {
+  const res = await browser.foo();
+  res.should.equal('foo');
+  await browser.bar();
+})();
+```
 
 #### Areas of improvement
 
