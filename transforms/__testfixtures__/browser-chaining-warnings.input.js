@@ -6,12 +6,28 @@
         .then(baz);
 })();
 
+// should add syntax errors to the code when identifier is used inside then that followed by another then with parameter
+(function() {
+    return this.browser
+        .foo()
+        .then(bar)
+        .then(res => res);
+})();
+
 // should add syntax errors to the code when function is called inside then
 (function() {
     return this.browser
         .foo()
         .then(bar())
         .then(baz());
+})();
+
+// should add syntax errors to the code when function is called inside then that followed by another then with parameter
+(function() {
+    return this.browser
+        .foo()
+        .then(bar())
+        .then(res => res);
 })();
 
 // should wrap to syntax errors only function call inside then and do nothing with call on browser
@@ -26,6 +42,80 @@
     this.browser
         .foo()
         .then(foo.bind(this.browser));
+})();
+
+// should add syntax errors to the code when if statement is used inside then that followed by another then with parameter
+(function() {
+    return this.browser
+        .foo()
+        .then(() => {
+            if (bar) {
+                return 1;
+            }
+            return 2;
+        })
+        .then(res => res);
+})();
+
+// should add syntax errors to the code when if statement is used with else inside then that followed by another then with parameter
+(function() {
+    return this.browser
+        .foo()
+        .then(() => {
+            if (bar) {
+                return 1;
+            } else {
+                return 2;
+            }
+        })
+        .then(res => res);
+})();
+
+// should add syntax errors to the code when if statement is used with else if inside then that followed by another then with parameter
+(function() {
+    return this.browser
+        .foo()
+        .then(() => {
+            if (bar) {
+                return 1;
+            } else if (baz) {
+                return 2;
+            }
+            return 3;
+        })
+        .then(res => res);
+})();
+
+// should add syntax errors to the code when few if statements are used inside then that followed by another then with parameter
+(function() {
+    return this.browser
+        .foo()
+        .then(() => {
+            if (bar) {
+                return 1;
+            }
+            if (baz) {
+                return 2;
+            }
+            return 3;
+        })
+        .then(res => res);
+})();
+
+// should add syntax errors to the code when few nested if statements are used inside then that followed by another then with parameter
+(function() {
+    return this.browser
+        .foo()
+        .then(() => {
+            if (bar) {
+                if (baz) {
+                    return 2;
+                }
+                return 1;
+            }
+            return 3;
+        })
+        .then(res => res);
 })();
 
 // should add syntax errors to the code when onRejected callback is passed to then

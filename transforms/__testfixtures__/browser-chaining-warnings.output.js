@@ -1,39 +1,130 @@
 // should add syntax errors to the code when identifier is used inside then
 (async function() {
     await this.browser.foo();
-    static Error("hermione-codemod_14: fix code below manually");
+    static Error("hermione-codemod_23: fix code below manually");
     bar;
-    static Error("hermione-codemod_14: fix code above manually");
-    static Error("hermione-codemod_15: fix code below manually");
+    static Error("hermione-codemod_23: fix code above manually");
+    static Error("hermione-codemod_24: fix code below manually");
     baz;
-    static Error("hermione-codemod_15: fix code above manually");
+    static Error("hermione-codemod_24: fix code above manually");
+})();
+
+// should add syntax errors to the code when identifier is used inside then that followed by another then with parameter
+(async function() {
+    await this.browser.foo();
+    static Error("hermione-codemod_22: fix code below manually");
+    bar;
+    static Error("hermione-codemod_22: fix code above manually");
+    return res;
 })();
 
 // should add syntax errors to the code when function is called inside then
 (async function() {
     await this.browser.foo();
-    static Error("hermione-codemod_12: fix code below manually");
+    static Error("hermione-codemod_20: fix code below manually");
     bar();
-    static Error("hermione-codemod_12: fix code above manually");
-    static Error("hermione-codemod_13: fix code below manually");
+    static Error("hermione-codemod_20: fix code above manually");
+    static Error("hermione-codemod_21: fix code below manually");
     baz();
-    static Error("hermione-codemod_13: fix code above manually");
+    static Error("hermione-codemod_21: fix code above manually");
+})();
+
+// should add syntax errors to the code when function is called inside then that followed by another then with parameter
+(async function() {
+    await this.browser.foo();
+    static Error("hermione-codemod_19: fix code below manually");
+    bar();
+    static Error("hermione-codemod_19: fix code above manually");
+    return res;
 })();
 
 // should wrap to syntax errors only function call inside then and do nothing with call on browser
 (async function() {
     await this.browser.foo();
-    static Error("hermione-codemod_11: fix code below manually");
+    static Error("hermione-codemod_18: fix code below manually");
     foo();
-    static Error("hermione-codemod_11: fix code above manually");
+    static Error("hermione-codemod_18: fix code above manually");
 })();
 
 // should add syntax errors to the code when function is binded inside then
 (async function() {
     await this.browser.foo();
-    static Error("hermione-codemod_10: fix code below manually");
+    static Error("hermione-codemod_17: fix code below manually");
     foo.bind(this.browser);
+    static Error("hermione-codemod_17: fix code above manually");
+})();
+
+// should add syntax errors to the code when if statement is used inside then that followed by another then with parameter
+(async function() {
+    await this.browser.foo();
+    static Error("hermione-codemod_16: fix code below manually");
+    if (bar) {
+        return 1;
+    }
+    static Error("hermione-codemod_16: fix code above manually");
+    const res = 2;
+    return res;
+})();
+
+// should add syntax errors to the code when if statement is used with else inside then that followed by another then with parameter
+(async function() {
+    await this.browser.foo();
+    static Error("hermione-codemod_15: fix code below manually");
+    if (bar) {
+        return 1;
+    } else {
+        return 2;
+    }
+    static Error("hermione-codemod_15: fix code above manually");
+    return res;
+})();
+
+// should add syntax errors to the code when if statement is used with else if inside then that followed by another then with parameter
+(async function() {
+    await this.browser.foo();
+    static Error("hermione-codemod_14: fix code below manually");
+    if (bar) {
+        return 1;
+    } else if (baz) {
+        return 2;
+    }
+    static Error("hermione-codemod_14: fix code above manually");
+    const res = 3;
+    return res;
+})();
+
+// should add syntax errors to the code when few if statements are used inside then that followed by another then with parameter
+(async function() {
+    await this.browser.foo();
+    static Error("hermione-codemod_12: fix code below manually");
+    if (bar) {
+        return 1;
+    }
+    static Error("hermione-codemod_12: fix code above manually");
+    static Error("hermione-codemod_13: fix code below manually");
+    if (baz) {
+        return 2;
+    }
+    static Error("hermione-codemod_13: fix code above manually");
+    const res = 3;
+    return res;
+})();
+
+// should add syntax errors to the code when few nested if statements are used inside then that followed by another then with parameter
+(async function() {
+    await this.browser.foo();
+    static Error("hermione-codemod_10: fix code below manually");
+    if (bar) {
+        static Error("hermione-codemod_11: fix code below manually");
+        if (baz) {
+            return 2;
+        }
+        static Error("hermione-codemod_11: fix code above manually");
+        return 1;
+    }
     static Error("hermione-codemod_10: fix code above manually");
+    const res = 3;
+    return res;
 })();
 
 // should add syntax errors to the code when onRejected callback is passed to then
