@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.4](https://github.com/gemini-testing/hermione-codemod/compare/v0.1.3...v0.1.4) (2021-07-29)
+
+
+### Features
+
+* **browser-chaining:** add option "--break-chaining-on" ([5220a9f](https://github.com/gemini-testing/hermione-codemod/commit/5220a9f095ca8b7f49812a8f45c2445e7e6f03ff))
+
+
+### Bug Fixes
+
+* improved work with cli-options ([08116d1](https://github.com/gemini-testing/hermione-codemod/commit/08116d19cd9c266b7c3bd36aa5db1ab36c7b97c4))
+* rename option "no-await" to "not-await" and change defaults ([4fa6f1d](https://github.com/gemini-testing/hermione-codemod/commit/4fa6f1d13cdeeeeffba51e5d9ea75c287198984a))
+
 ### [0.1.3](https://github.com/gemini-testing/hermione-codemod/compare/v0.1.2...v0.1.3) (2021-07-27)
 
 
