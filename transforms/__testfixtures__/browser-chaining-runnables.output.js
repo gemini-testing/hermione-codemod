@@ -96,6 +96,16 @@ it('should replace return of browser call to await inside "then" and "if" statem
     await this.browser.qux();
 });
 
+it('should not replace return node to await inside "then" but not inside "if" statement', async function() {
+    await this.browser.foo();
+
+    await this.browser.execute(function() {
+        return window.btoa('Hello world');
+    });
+
+    await this.browser.qux();
+});
+
 /**
  * USING ASYNC
  */
