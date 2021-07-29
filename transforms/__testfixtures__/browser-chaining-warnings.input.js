@@ -81,3 +81,12 @@
         .foo()
         .then(() => true && this.browser.bar());
 };
+
+// should add syntax errors to the code when asserts are used inside browser chaining
+() => {
+    this.browser
+        .foo()
+        .should.eventually.equal('foo')
+        .bar()
+        .should.be.rejectedWith('error');
+};

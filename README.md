@@ -53,53 +53,89 @@ More examples can be found in [transforms/\_\_testfixtures\_\_](https://github.c
 
 * `--browser-name` - ability to set used name of browser instance variable in your tests. Transform script will find usage of passed browser names with chaining calls and transform them to await nodes. Default value is `browser`.
 
-  Example:
-  ```sh
-  npx jscodeshift -t <transform> <path> --browser-name='bro1,bro2'
-  ```
+Example:
+```sh
+npx jscodeshift -t <transform> <path> --browser-name='bro1,bro2'
+```
 
-  Input:
-  ```js
-  const fn1 = () => bro1.foo().bar();
-  const fn2 = () => this.bro2.baz().qux();
-  ```
+Input:
+```js
+const fn1 = () => bro1.foo().bar();
+const fn2 = () => this.bro2.baz().qux();
+```
 
-  Output:
-  ```js
-  const fn1 = async () => {
-    await bro1.foo();
-    return bro1.bar();
-  };
-  const fn2 = async () => {
-    await this.bro2.baz();
-    return this.bro2.qux();
-  };
-  ```
+Output:
+```js
+const fn1 = async () => {
+  await bro1.foo();
+  return bro1.bar();
+};
+const fn2 = async () => {
+  await this.bro2.baz();
+  return this.bro2.qux();
+};
+```
 
-* `--no-await` - ability to set names of called nodes that should not be awaited. For example if you do not await assert calls called inside then callback. Default value is `null`.
+* `--not-await` - ability to set names of called nodes that should not be awaited. For example if you do not await assert calls called inside then callback. Default value is `['assert', 'should', 'expect']`.
 
-  Example:
-  ```sh
-  npx jscodeshift -t <transform> <path> --no-await='assert,expect'
-  ```
+Example:
+```sh
+npx jscodeshift -t <transform> <path> --not-await='assert,expect'
+```
 
-  Input:
-  ```js
-  (function() {
-    return browser.foo()
-      .then(() => assert.equal(1, 1))
-      .then(() => expect(2).to.equal(2));
-  })();
-  ```
+Input:
+```js
+(function() {
+  return browser.foo()
+    .then(() => assert.equal(1, 1))
+    .then(() => expect(2).to.equal(2));
+})();
+```
 
-  Output:
-  ```js
-  (async function() {
-    await browser.foo();
-    assert.equal(1, 1);
-    return expect(2).to.equal(2);
-  })();
-  ```
+Output:
+```js
+(async function() {
+  await browser.foo();
+  assert.equal(1, 1);
+  return expect(2).to.equal(2);
+})();
+```
+
+* `--break-chaining-on` - ability to break chaining on nodes that matched to the passed identifiers. For example if you are using [chai-as-promised](https://www.npmjs.com/package/chai-as-promised) that can be called on browser commands. Default value is `['assert', 'should', 'expect']`.
+
+Example:
+```sh
+npx jscodeshift -t <transform> <path> --break-chaining-on='should'
+```
+
+Input:
+```js
+(function() {
+  return browser.foo()
+    .should.eventually.equal('foo')
+    .bar();
+})();
+```
+
+Output:
+```js
+(async function() {
+  await browser.foo();
+  static Error("hermione-codemod_1: fix code below manually");
+  should.eventually.equal('foo');
+  static Error("hermione-codemod_1: fix code above manually");
+  await browser.bar();
+})();
+```
+
+After that you need to correct the test manually and in the end it might look like this:
+```js
+(async function() {
+  const res = await browser.foo();
+  res.should.equal('foo');
+  await browser.bar();
+})();
+```
 
 #### Areas of improvement
 
@@ -225,7 +261,7 @@ More examples can be found in [transforms/\_\_testfixtures\_\_](https://github.c
 
 1. Run transform script on files that should be modified. For example I want modify all files inside `tests/platform/**` whose name matches on `*.hermione.js` or `*.hermione-helper.js`:
 ```sh
-npx jscodeshift -t node_modules/hermione-codemod/transforms/browser-chaining-to-async-await.js tests/platform/**/*.*(hermione|hermione-helper).js --no-await='assert'
+npx jscodeshift -t node_modules/hermione-codemod/transforms/browser-chaining-to-async-await.js tests/platform/**/*.*(hermione|hermione-helper).js --not-await='assert'
 ```
 2. After transformation of all tests script may inform you about found problems which are listed [above](#areas-of-improvement), fix them manually.
 3. Run transform script again even if it does not inform you about any problems in previous step. It is necessary because it can found problems with duplication of identifier declaration after transformation code. Rerun transform script until it succeeds and won't inform you that no test has been modified.
