@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.5](https://github.com/gemini-testing/hermione-codemod/compare/v0.1.4...v0.1.5) (2021-07-30)
+
+
+### Bug Fixes
+
+* add syntax errors around using if statement inside then which is followed by another then with parameter ([d4cc1fe](https://github.com/gemini-testing/hermione-codemod/commit/d4cc1fe1b3c1b8a15fc1a033d6e2c83e6ca50c94))
+* do not replace all return nodes to await inside "then" ([2572c41](https://github.com/gemini-testing/hermione-codemod/commit/2572c410315b571d51dbb4b4d605c0e9e3002938))
+
 ### [0.1.4](https://github.com/gemini-testing/hermione-codemod/compare/v0.1.3...v0.1.4) (2021-07-29)
 
 
