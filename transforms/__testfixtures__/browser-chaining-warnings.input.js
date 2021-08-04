@@ -180,3 +180,14 @@
         .bar()
         .should.be.rejectedWith('error');
 };
+
+// should not add syntax error to the code when asserts are used not inside browser chaining
+() => {
+    this.browser
+        .foo()
+        .bar()
+        .then((value) => {
+            value[0].should.equal(true);
+            value[1].should.equal(false);
+        });
+};

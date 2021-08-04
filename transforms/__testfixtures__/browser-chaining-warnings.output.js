@@ -195,3 +195,11 @@ async () => {
     should.be.rejectedWith('error');
     static Error("hermione-codemod_2: fix code above manually");
 };
+
+// should not add syntax error to the code when asserts are used not inside browser chaining
+async () => {
+    await this.browser.foo();
+    const value = await this.browser.bar();
+    value[0].should.equal(true);
+    value[1].should.equal(false);
+};
