@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.7](https://github.com/gemini-testing/hermione-codemod/compare/v0.1.6...v0.1.7) (2021-11-22)
+
+
+### Bug Fixes
+
+* correctly working with classes on typesciprt ([344d2a3](https://github.com/gemini-testing/hermione-codemod/commit/344d2a370bbd4d764b3ffe138ff1f85ec9e4b0a8))
+
 ### [0.1.6](https://github.com/gemini-testing/hermione-codemod/compare/v0.1.5...v0.1.6) (2021-08-04)
 
 
